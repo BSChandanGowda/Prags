@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Surprise for Pragnya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5c3d8 0%, #c2e9fb 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 8px solid #ffb6c1;
+        }
+        
+        .header {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        h1 {
+            color: #ff6b9d;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0px rgba(255, 182, 193, 0.3);
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .stage {
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .stage.active {
+            display: block;
+        }
+        
+        .input-container {
+            margin: 25px 0;
+        }
+        
+        label {
+            display: block;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #ff6b9d;
+            font-weight: 600;
+        }
+        
+        input {
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            border: 3px solid #ffb6c1;
+            border-radius: 50px;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+            transition: all 0.3s;
+            outline: none;
+        }
+        
+        input:focus {
+            border-color: #ff6b9d;
+            box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.2);
+        }
+        
+        .photo-container {
+            margin: 30px auto;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        .photo-frame {
+            background-color: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 5px solid #ffb6c1;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .flower-photo {
+            width: 100%;
+            height: 300px;
+            background-color: #f8f8f8;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 1.2rem;
+            background-image: url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .photo-label {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff6b9d;
+            color: white;
+            padding: 8px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.3rem;
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+            z-index: 10;
+        }
+        
+        .btn {
+            background-color: #ff6b9d;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            margin-top: 20px;
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+        }
+        
+        .btn:hover {
+            background-color: #ff4d8d;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 107, 157, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .shayari-container {
+            background-color: #fef9ff;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+            border-left: 8px solid #ff6b9d;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .shayari {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #555;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .shayari-author {
+            color: #ff6b9d;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 15px;
+        }
+        
+        .message {
+            font-size: 1.4rem;
+            color: #ff6b9d;
+            margin: 25px 0;
+            padding: 15px;
+            background-color: rgba(255, 182, 193, 0.1);
+            border-radius: 15px;
+        }
+        
+        .error {
+            color: #ff4757;
+            margin-top: 10px;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .progress-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin: 0 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .progress-step.active {
+            background-color: #ff6b9d;
+            color: white;
+            transform: scale(1.2);
+        }
+        
+        .success {
+            color: #2ed573;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff6b9d;
+            border-radius: 50%;
+            opacity: 0;
+        }
+        
+        .heart {
+            color: #ff6b9d;
+            font-size: 2rem;
+            margin: 10px;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            5% { transform: scale(1.3); }
+            10% { transform: scale(1.1); }
+            15% { transform: scale(1.4); }
+            20% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .shayari {
+                font-size: 1.1rem;
+            }
+            
+            input {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-heart heart"></i> A Special Surprise <i class="fas fa-heart heart"></i></h1>
+            <div class="subtitle">Made with love for someone special</div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-step active" id="step1">1</div>
+            <div class="progress-step" id="step2">2</div>
+            <div class="progress-step" id="step3">3</div>
+            <div class="progress-step" id="step4">4</div>
+        </div>
+        
+        <!-- Stage 1: Name Input -->
+        <div class="stage active" id="stage1">
+            <div class="message">Hey there! Let's start with your name</div>
+            <div class="input-container">
+                <label for="nameInput">What's your name?</label>
+                <input type="text" id="nameInput" placeholder="Enter your name here">
+                <div class="error" id="nameError">Please enter your name</div>
+            </div>
+            <button class="btn" id="nameSubmit">Next <i class="fas fa-arrow-right"></i></button>
+        </div>
+        
+        <!-- Stage 2: Photo Display -->
+        <div class="stage" id="stage2">
+            <div class="message" id="personalizedMessage">This is for you, <span id="userName">Pragnya</span>!</div>
+            
+            <div class="photo-container">
+                <div class="photo-label">A Beautiful Flower Just For You</div>
+                <div class="photo-frame">
+                    <div class="flower-photo" id="flowerPhoto">
+                        <!-- Photo will be displayed here -->
+                    </div>
+                </div>
+            </div>
+            
+            <p style="font-size: 1.2rem; margin-top: 20px; color: #666;">
+                Flowers remind us to appreciate the beauty in life, just like you bring beauty into the world!
+            </p>
+            <button class="btn" id="photoNext">Next <i class="fas fa-arrow-right"></i></button>
+        </div>
+        
+        <!-- Stage 3: Question -->
+        <div class="stage" id="stage3">
+            <div class="message">Now, a little question for you...</div>
+            <div class="input-container">
+                <label for="answerInput">Yen bekanthe?</label>
+                <input type="text" id="answerInput" placeholder="Your answer here">
+                <div class="error" id="answerError">That's not the right answer. Try again!</div>
+                <div class="success" id="answerSuccess">Perfect! You got it right!</div>
+            </div>
+            <button class="btn" id="answerSubmit">Check Answer</button>
+        </div>
+        
+        <!-- Stage 4: Shayari -->
+        <div class="stage" id="stage4">
+            <div class="message">Here's something special for you, <span id="shayariUserName">Pragnya</span></div>
+            
+            <div class="shayari-container">
+                <div class="shayari">
+                    <p>Woh khud ko kabhi khoobsurat nahi maanti,</p>
+                    <p>Par uski muskurahat duniya ko rok deti hai ek pal ke liye.</p>
+                    <p>Jaldi samajhdaar ban gayi, duniya ka bojh utha liya,</p>
+                    <p>Chhoti si soch mein, bade bade khayal sambhaal liye.</p>
+                    <p>Har baat pe haan karne wali, khud ko hamesha peeche rakh jaati,</p>
+                    <p>Woh dost hai, jise har koi apni zindagi mein paana chahe...</p>
+                    <p>Aur dua hai meri—ki ek din koi aisa mile,</p>
+                    <p>Jo usse azaadi nahi, par sukoon de;</p>
+                    <p>Uski independent zindagi ko ek kandha de,</p>
+                    <p>Jispe woh bina dare, bina soche jee sake....</p>
+                </div>
+                <div class="shayari-author">- Made with love, just for you</div>
+            </div>
+            
+            <div class="message">Hope this brings a smile to your face! 💖</div>
+            
+            <button class="btn" id="restartBtn">Start Over <i class="fas fa-redo"></i></button>
+        </div>
+        
+        <div class="footer">
+            Made with <i class="fas fa-heart" style="color: #ff6b9d;"></i> by a friend who cares
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const stage1 = document.getElementById('stage1');
+        const stage2 = document.getElementById('stage2');
+        const stage3 = document.getElementById('stage3');
+        const stage4 = document.getElementById('stage4');
+        
+        const nameInput = document.getElementById('nameInput');
+        const nameSubmit = document.getElementById('nameSubmit');
+        const nameError = document.getElementById('nameError');
+        
+        const photoNext = document.getElementById('photoNext');
+        
+        const answerInput = document.getElementById('answerInput');
+        const answerSubmit = document.getElementById('answerSubmit');
+        const answerError = document.getElementById('answerError');
+        const answerSuccess = document.getElementById('answerSuccess');
+        
+        const restartBtn = document.getElementById('restartBtn');
+        
+        const userNameSpans = document.querySelectorAll('#userName, #shayariUserName');
+        
+        const progressSteps = document.querySelectorAll('.progress-step');
+        
+        // Current stage
+        let currentStage = 1;
+        
+        // Replace this with your friend's name if you want to pre-fill it
+        const friendName = "Pragnya";
+        
+        // Initialize the page
+        function init() {
+            // Set friend's name as placeholder
+            nameInput.placeholder = `e.g. ${friendName}`;
+            
+            // Add event listeners
+            nameSubmit.addEventListener('click', validateName);
+            nameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') validateName();
+            });
+            
+            photoNext.addEventListener('click', goToStage3);
+            
+            answerSubmit.addEventListener('click', validateAnswer);
+            answerInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') validateAnswer();
+            });
+            
+            restartBtn.addEventListener('click', restartExperience);
+            
+            // Create confetti effect
+            createConfetti();
+        }
+        
+        // Validate name input
+        function validateName() {
+            const name = nameInput.value.trim();
+            
+            if (name === "") {
+                nameError.style.display = "block";
+                nameInput.style.borderColor = "#ff4757";
+                return;
+            }
+            
+            nameError.style.display = "none";
+            nameInput.style.borderColor = "#2ed573";
+            
+            // Update all instances of the name
+            userNameSpans.forEach(span => {
+                span.textContent = name;
+            });
+            
+            // Go to next stage
+            goToStage2();
+        }
+        
+        // Go to stage 2 (photo display)
+        function goToStage2() {
+            // Update progress indicator
+            updateProgress(2);
+            
+            // Switch stages
+            stage1.classList.remove('active');
+            stage2.classList.add('active');
+            
+            // Trigger confetti
+            triggerConfetti();
+        }
+        
+        // Go to stage 3 (question)
+        function goToStage3() {
+            // Update progress indicator
+            updateProgress(3);
+            
+            // Switch stages
+            stage2.classList.remove('active');
+            stage3.classList.add('active');
+            
+            // Focus on answer input
+            setTimeout(() => {
+                answerInput.focus();
+            }, 300);
+        }
+        
+        // Validate answer
+        function validateAnswer() {
+            const answer = answerInput.value.trim().toLowerCase();
+            const correctAnswer = "tunne";
+            
+            if (answer === correctAnswer) {
+                answerError.style.display = "none";
+                answerSuccess.style.display = "block";
+                answerInput.style.borderColor = "#2ed573";
+                
+                // Go to next stage after a delay
+                setTimeout(() => {
+                    goToStage4();
+                }, 1500);
+            } else {
+                answerError.style.display = "block";
+                answerSuccess.style.display = "none";
+                answerInput.style.borderColor = "#ff4757";
+                
+                // Shake animation for wrong answer
+                answerInput.style.animation = "none";
+                setTimeout(() => {
+                    answerInput.style.animation = "shake 0.5s";
+                }, 10);
+            }
+        }
+        
+        // Go to stage 4 (shayari)
+        function goToStage4() {
+            // Update progress indicator
+            updateProgress(4);
+            
+            // Switch stages
+            stage3.classList.remove('active');
+            stage4.classList.add('active');
+            
+            // Trigger confetti
+            triggerConfetti();
+        }
+        
+        // Update progress indicator
+        function updateProgress(step) {
+            progressSteps.forEach((stepElement, index) => {
+                if (index + 1 <= step) {
+                    stepElement.classList.add('active');
+                } else {
+                    stepElement.classList.remove('active');
+                }
+            });
+            
+            currentStage = step;
+        }
+        
+        // Restart the experience
+        function restartExperience() {
+            // Reset all stages
+            stage4.classList.remove('active');
+            stage1.classList.add('active');
+            
+            // Reset inputs
+            nameInput.value = "";
+            answerInput.value = "";
+            
+            // Reset errors and success messages
+            nameError.style.display = "none";
+            answerError.style.display = "none";
+            answerSuccess.style.display = "none";
+            
+            // Reset input borders
+            nameInput.style.borderColor = "#ffb6c1";
+            answerInput.style.borderColor = "#ffb6c1";
+            
+            // Reset progress
+            updateProgress(1);
+            
+            // Focus on name input
+            setTimeout(() => {
+                nameInput.focus();
+            }, 300);
+        }
+        
+        // Create confetti elements
+        function createConfetti() {
+            const container = document.querySelector('.container');
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = `${Math.random() * 100}%`;
+                confetti.style.backgroundColor = getRandomColor();
+                confetti.style.width = `${Math.random() * 10 + 5}px`;
+                confetti.style.height = confetti.style.width;
+                confetti.style.opacity = '0';
+                container.appendChild(confetti);
+            }
+        }
+        
+        // Trigger confetti animation
+        function triggerConfetti() {
+            const allConfetti = document.querySelectorAll('.confetti');
+            
+            allConfetti.forEach(confetti => {
+                // Reset position
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = `-10px`;
+                confetti.style.opacity = '1';
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                // Animate
+                const animation = confetti.animate([
+                    { top: '-10px', opacity: 1 },
+                    { top: `${Math.random() * 80 + 20}%`, opacity: 0.7 },
+                    { top: '110%', opacity: 0 }
+                ], {
+                    duration: Math.random() * 2000 + 1000,
+                    easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+                });
+                
+                // Remove opacity after animation
+                animation.onfinish = () => {
+                    confetti.style.opacity = '0';
+                };
+            });
+        }
+        
+        // Get random color for confetti
+        function getRandomColor() {
+            const colors = ['#ff6b9d', '#ffb6c1', '#c2e9fb', '#a8edea', '#fed6e3'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+        
+        // Add CSS for shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Initialize the page when loaded
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
